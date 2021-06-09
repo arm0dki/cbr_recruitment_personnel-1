@@ -1,22 +1,20 @@
 import './main_page.styl'
-import {ListExceptions} from './list_exceptions.imba'
-import {ListUser} from './list_users.imba'
-import {StartPage} from './start_page'
+import {Report1} from './report1.imba'
+import {Report2} from './report2.imba'
+
 
 var mode = window.TARGET_ENV
-var _path =  mode!='production' ? '' : 'view_doc.html?mode=sued_exceptions_v2&page='
+var _path =  mode!='production' ? '' : 'view_doc.html?mode=recruitment_personnel&page='
 
 export tag MainPage
 
 	def render
 		<self>
-			<div.admin_exceptions_header-title>
-				<h1> 'Администрирование исключений СУЭД'
-			<div.admin_exceptions_menu>
-				<span route-to="/{_path}list_exceptions"> "Список исключений"
-				<span route-to="/{_path}list_users"> "Список всех пользователей"
-			<div.admin_exceptions_content>
-				# <StartPage route="/{_path.replace('&page=','')}/*$">
-				<StartPage route="/{_path}start_page">
-				<ListExceptions route="/{_path}list_exceptions">
-				<ListUser route="/{_path}list_users">
+			<div.recruitment_header-title>
+				<h1> 'Отчётность для рекрутеров'
+			<div.recruitment_menu>
+				<span route-to="/{_path}report1"> "Отчёт 1"
+				<span route-to="/{_path}report2"> "Отчёт 2"
+			<div.recruitment_content>
+				<Report1 route="/{_path}report1">
+				<Report2 route="/{_path}report2">

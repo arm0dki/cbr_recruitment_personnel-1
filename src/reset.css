@@ -1,0 +1,133 @@
+*,
+*:before,
+*:after {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+html {
+    line-height: 1.15;
+    -webkit-text-size-adjust: 100%;
+  }
+    
+  button,input,optgroup,select,textarea {
+    font-family: inherit;
+    font-size: 100%;
+    line-height: 1.15;
+    margin: 0;
+  }
+  
+  button,input {
+    overflow: visible;
+  }
+  
+  button,
+  select {
+    text-transform: none;
+    padding: 18px;
+    border: 1px solid #b2b5c0;
+    border-radius: 2px;
+  }
+  
+  button,
+  [type="button"],
+  [type="reset"],
+  [type="submit"] {
+    -webkit-appearance: button;
+  }
+  
+  button::-moz-focus-inner,
+  [type="button"]::-moz-focus-inner,
+  [type="reset"]::-moz-focus-inner,
+  [type="submit"]::-moz-focus-inner {
+    border-style: none;
+    padding: 0;
+  }
+  
+  textarea {
+    overflow: auto;
+  }
+  
+  [type="number"]::-webkit-inner-spin-button,
+  [type="number"]::-webkit-outer-spin-button {
+    height: auto;
+  }
+  
+  [type="search"] {
+    -webkit-appearance: textfield;
+    outline-offset: -2px;
+  }
+  
+  [type="search"]::-webkit-search-decoration {
+    -webkit-appearance: none;
+  }
+  
+  ::-webkit-file-upload-button {
+    -webkit-appearance: button;
+    font: inherit;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  h1,h2,h3,h4,h5,h6,div,p,span,pre,iframe,a,address,img,strong,i,ul,li,figcaption,figure,form,fieldset,label,textarea,input,button,table,thead,dl,dt,dd,tbody,tr,th,td,canvas,header,article,section,aside,footer,audio,video,blockquote,*:before,*:after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: inherit;
+    color: inherit;
+  }
+  
+  h1,h2,h3,h4,h5,h6 {
+    font-weight: normal;
+  }
+  
+  a {
+    text-decoration: none;
+  }
+  
+  ul {
+    list-style-type: none;
+  }
+  
+  table {
+    border-collapse: collapse;
+  }
+  
+  textarea {
+    resize: none;
+  }
+  
+  textarea,
+  input {
+    outline: none;
+  }
+  
+  input::-ms-clear {
+    display: none;
+  }
+  
+  button {
+    background-color: transparent;
+    cursor: pointer;
+    border: none;
+  }
+  
+  fieldset {
+    border: none;
+  }
+  
+  legend {
+    padding: 0;
+  }
+  
+  section {
+    position: relative;
+  }
+  
+  img {
+    min-width: 30px;
+  }
+ 

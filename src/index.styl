@@ -1,0 +1,117 @@
+@import './reset.css'
+
+.MainPage
+    max-width 1260px
+    position relative
+    margin 0 auto
+    display flex
+    flex-direction column
+    min-height 200px
+    background-color #fafafa
+    padding 10px
+    font-family Stem,sans-serif
+
+    .recruitment_header-title
+        margin 20px 0 0 0
+        color #08c
+        text-align: center
+
+    .recruitment_menu
+        display flex
+        flex-direction row
+        justify-content space-around
+        margin 20px 10vw 20px 10vw
+
+        span
+            display flex
+            font-size 1em	
+            font-weight 500
+            cursor pointer
+            border-bottom 2px solid #fff
+            color #0a0a0a
+
+        span:hover
+            color #0a0a0a
+            border-bottom 2px solid #2f73b6
+            transform scale(1.03)	
+
+        span.active
+            color #0a0a0a
+            border-bottom 2px solid #2f73b6
+            transform scale(1.03)			
+
+    .recruitment_content
+        margin auto
+        width 99%
+        min-height 400px
+        box-shadow 0 0 3px 3px #ddd
+
+        .content_table
+        	.font--small
+		        font-size 10px
+            .table
+                width 100%
+                border-collapse separate
+                border-spacing 0
+                tr:hover
+                    background-color #d8d8d8
+                tr
+                    position relative
+
+                    th
+                        font-weight 500
+                        letter-spacing 0.01em
+                        text-transform uppercase
+                        text-align left
+                        outline none
+                        color #8F97AC
+                        background #F5F6FA
+                        border none
+                        text-align left
+                        height 63px
+                        line-height 1.16666667
+                        span
+                            cursor pointer
+                            padding-right 14px
+                            display inline-block
+                            position relative;
+                    td
+                        padding 4px 10px 4px 0
+                        height 74px
+                        font-size 14px
+                        line-height 1.14285714
+                        letter-spacing 0.01em
+                        border-bottom 1px solid #CDD3E4
+                    .table-box
+                        display flex
+
+                        input[type=text]
+                            margin-right 5px
+                            padding 4px
+
+                        input[type=button]
+                            margin 1px 0
+
+                    .sorting 
+                        span:after
+                            content ''
+                            position absolute
+                            top 50%
+                            right 0
+                            margin-top -4px
+                            border-left:4px solid transparent
+                            border-right 4px solid transparent
+                            border-top 7px solid #8F97AC
+
+                    .asc 
+                        span:after
+                            border-top none
+                            border-bottom 7px solid #CC003D
+
+                    .desc
+                        span:after
+                            border-top-color #CC003D
+                    td,th
+                        padding-left 10px
+                th:first-child 
+                    padding-left 10px
