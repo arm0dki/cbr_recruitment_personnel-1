@@ -4,56 +4,69 @@ import {Conf} from '../../server'
 export tag Report1
 
     let tableData=[]
+    let objData={}
     let tableConfig=[]
     let server = <fromToServer>
     let mode = window.TARGET_ENV
     let _path =  mode!='production' ? '' : window.PUBLIC_PATH
+    let int_active_vacancies = 0
+    let int_total_vacancies = 0
 
     def get_report1 sText
         if mode=="production"
             console.log 'ddd'
         else
-            tableData = await Conf("get_data_table_r1")
+            objData = await Conf("get_data_table_r1")
+            tableData = objData:data
+            Imba.commit
+            setTimeout(&,100) do get_chart objData
             
-    def get_chart sText
-        let ctx = document.getElementsByClassName("myChart").item(0)
+    def get_chart oData
+        let ctx = document.getElementById('myChart');
         let conf = {
-            type: 'bar',
+            type: 'horizontalBar',
             data: {
-                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                labels: oData:labels,
                 datasets: [{
-                    label: '# of Votes',
-                    data: [12, 19, 3, 5, 2, 3],
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)'
-                    ],
-                    borderWidth: 1
+                    label: 'Активных',
+                    data: oData:active_vacancies,
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgb(75, 192, 192)',
+                    borderWidth: 1,
+                    order: 1
+                },{
+                    label: 'Всего',
+                    data: oData:total_vacancies,
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    borderColor: 'rgb(255, 99, 132)',
+                    borderWidth: 1,
+                    order: 2
                 }]
             },
             options: {
+                title: {
+                    display: true,
+                    text: 'Заявка на подбор',
+                    fontSize: 16
+                },
+                legend: {
+                    display: true,
+                    position: 'right'
+                },
                 scales: {
-                    yAxes: [{
+                    xAxes: [{
+                        stacked: true,
                         ticks: {
                             beginAtZero: true
                         }
+                    }],
+                    yAxes: [{
+                        stacked: true
                     }]
                 }
             }
         }
-        let myChart=new Chart(ctx, conf)
+        let myChart=Chart.new ctx, conf
 
     def mount
         tableConfig = await Conf("get_conf_table_r1")
@@ -71,11 +84,17 @@ export tag Report1
                                         <span> item:title
                     <tbody>
                         for item in tableData
-                            <tr>
-                                <td css:width="300px"> item:vacancies
-                                <td css:width="100px"> item:active_vacancies
-                                <td css:width="150px"> item:total_vacancies
-            <div>
-                <canvas.myChart>
-            <button.btn.btn--middle .arg_footer-btn :click=(do get_chart)> "chart"
+                            if item:vacancies != 'Общий итог'
+                                <tr>
+                                    <td> item:vacancies
+                                    <td> item:active_vacancies
+                                    <td> item:total_vacancies
+                            else
+                                <tr>
+                                    <td css:background="#e1e4f1"> item:vacancies
+                                    <td css:background="#e1e4f1"> item:active_vacancies
+                                    <td css:background="#e1e4f1"> item:total_vacancies
+                        
+            <div.content_chart>
+                <canvas id="myChart">
 
