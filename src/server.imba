@@ -2,7 +2,7 @@ var mode = window.TARGET_ENV
 var publicPath =  mode!='production' ? '' : window.PUBLIC_PATH
 
 export var oConfTableReport1=[
-	{title:'Вакансия', width:'300px'},
+	{title:'Вакансии', width:'300px'},
 	{title:'Активных вакансий', width:'100px'},
 	{title:'Всего вакансий', width:'100px'}
 ]

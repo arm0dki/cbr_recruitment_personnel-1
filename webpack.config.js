@@ -78,6 +78,9 @@ module.exports = (env, options) => {
 		  'window.PUBLIC_PATH': JSON.stringify(publicPath)
 		}),
 	],
+	externals: {
+        moment: 'moment'
+    },
 	devServer: {
 		contentBase: path.resolve(__dirname, 'public'),
 		watchContentBase: true,
