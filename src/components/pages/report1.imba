@@ -46,7 +46,7 @@ export tag Report1
             options: {
                 title: {
                     display: true,
-                    text: 'Заявка на подбор',
+                    text: '',
                     fontSize: 16
                 },
                 legend: {
@@ -96,5 +96,5 @@ export tag Report1
                                     <td css:background="#e1e4f1"> item:total_vacancies
                         
             <div.content_chart>
-                <canvas id="myChart">
+                <canvas id="myChart" width="500" height="100">
 
