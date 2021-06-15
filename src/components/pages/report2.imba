@@ -44,8 +44,8 @@ export tag Report2
                 },{
                     label: 'Финалисты',
                     data: oData:finalists,
-                    backgroundColor: 'rgba(255, 75, 132, 0.2)',
-                    borderColor: 'rgb(255, 99, 132)',
+                    backgroundColor: 'rgba(24, 166, 12, 0.2)',
+                    borderColor: 'rgb(24, 99, 12)',
                     borderWidth: 1,
                     order: 3
                 }]
@@ -91,15 +91,15 @@ export tag Report2
                             if item:vacancies != 'Общий итог'
                                 <tr>
                                     <td> item:vacancies
-                                    <td> item:resume
-                                    <td> item:interview
-                                    <td> item:finalists
+                                    <td css:text-align="right"> item:resume
+                                    <td css:text-align="right"> item:interview
+                                    <td css:text-align="right"> item:finalists
                             else
                                 <tr>
-                                    <td css:background="#e1e4f1"> item:vacancies
-                                    <td css:background="#e1e4f1"> item:resume
-                                    <td css:background="#e1e4f1"> item:interview
-                                    <td css:background="#e1e4f1"> item:finalists
+                                    <td.total> item:vacancies
+                                    <td.total css:text-align="right"> item:resume
+                                    <td.total css:text-align="right"> item:interview
+                                    <td.total css:text-align="right"> item:finalists
                         
             <div.content_chart>
                 <canvas id="myChart" width="500" height="200">

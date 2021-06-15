@@ -3,15 +3,15 @@ var publicPath =  mode!='production' ? '' : window.PUBLIC_PATH
 
 export var oConfTableReport1=[
 	{title:'Вакансии', width:'30vw'},
-	{title:'Активных вакансий', width:'5vw'},
-	{title:'Всего вакансий', width:'5vw'}
+	{title:'Активных вакансий', width:'10vw'},
+	{title:'Всего вакансий', width:'10vw'}
 ]
 
 export var oConfTableReport2=[
 	{title:'Вакансии', width:'30vw'},
-	{title:'Направлено заказчик', width:'5vw'},
-	{title:'Интервью с заказчик', width:'5vw'},
-	{title:'Количество по полю финансы', width:'5vw'}
+	{title:'Направлено заказчик', width:'10vw'},
+	{title:'Интервью с заказчик', width:'10vw'},
+	{title:'Количество по полю финансы', width:'10vw'}
 ]
 
 export var tableDataReport1={data: [
@@ -25,14 +25,14 @@ total_vacancies: [10,10,10]
 }
 
 export var tableDataReport2={data: [
-	{vacancies: 'Главный эксперт', resume: 2, interview: 5, finalists: 0},
-	{vacancies: 'Ведущий эксперт', resume: 3, interview: 5, finalists: 4},
-	{vacancies: 'Эксперт', resume: 4, interview: 5, finalists: 5},
-	{vacancies: 'Общий итог', resume: 9, interview: 15, finalists: 9}], 
+	{vacancies: 'Главный эксперт', resume: 20, interview: 50, finalists: 0},
+	{vacancies: 'Ведущий эксперт', resume: 30, interview: 50, finalists: 40},
+	{vacancies: 'Эксперт', resume: 40, interview: 50, finalists: 50},
+	{vacancies: 'Общий итог', resume: 90, interview: 150, finalists: 90}], 
 labels: ['Главный экспер', 'Ведущий экспер', 'Эксперт'], 
-resume: [2,3,4], 
-interview: [5,5,5],
-finalists: [0,4,5]
+resume: [20,30,40], 
+interview: [50,50,50],
+finalists: [0,40,50]
 }
 
 var endpoints = {
