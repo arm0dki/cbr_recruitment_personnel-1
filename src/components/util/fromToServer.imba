@@ -1,7 +1,7 @@
 
 export tag fromToServer
 
-	var server_path = "custom_web_template.html?object_id=6946060213517098168" 
+	var server_path = "custom_web_template.html?object_id=6974212056702731175" 
 
 	def load url
 		var res = await window.fetch(server_path+url,

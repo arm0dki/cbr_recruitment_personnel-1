@@ -4,7 +4,7 @@ var publicPath = '';
 module.exports = (env, options) => {
 	console.log('options :>> ', options.mode);
 	if(options.mode=='production')
-	publicPath= 'recruitment_personnel/'
+	publicPath= 'Recruitment_Personnel/'
 	return {
 	module: {
 		rules: [

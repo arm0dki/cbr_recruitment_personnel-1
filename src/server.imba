@@ -9,9 +9,9 @@ export var oConfTableReport1=[
 
 export var oConfTableReport2=[
 	{title:'Вакансии', width:'30vw'},
-	{title:'Направлено заказчик', width:'10vw'},
-	{title:'Интервью с заказчик', width:'10vw'},
-	{title:'Количество по полю финансы', width:'10vw'}
+	{title:'Направлено заказчику', width:'10vw'},
+	{title:'Интервью с заказчиком', width:'10vw'},
+	{title:'Финалисты', width:'10vw'}
 ]
 
 export var tableDataReport1={data: [
