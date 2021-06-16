@@ -9,10 +9,10 @@ export tag Report1
     let tableConfig=[]
     let server = <fromToServer>
     let mode = window.TARGET_ENV
-    let _path =  mode!='production' ? '' : window.PUBLIC_PATH
     let int_active_vacancies = 0
     let int_total_vacancies = 0
     let selected_sub_opt
+    let myChart
 
     def get_subdivisions
         if mode=="production"
@@ -20,7 +20,7 @@ export tag Report1
                 arrSubdivisions = data:data
                 Imba.commit
         else
-            arrSubdivisions = ['роль 1', 'роль 2', 'роль 3']
+            arrSubdivisions = [{subdivisions_1: 'роль 1'}, {subdivisions_1: 'роль 2'}, {subdivisions_1: 'роль 3'}]
 
     def changeSubdivisions e
         selected_sub_opt= e:_event:target:value
@@ -31,70 +31,100 @@ export tag Report1
         if mode=="production"
             params_subdivisions = (sText == "Все подрозделения" ? undefined : sText)
             params = '&'+ URLSearchParams.new({report: '1', subdivision: params_subdivisions}).toString
-            server.load("&action=get_report_data"+params).then do |data|
+            server.load("&action=get_report"+params).then do |data|
                 tableData = data:data
-                Imba.commit
                 setTimeout(&,100) do get_chart tableData
+                Imba.commit
         else
             objData = await Conf("get_data_table_r1")
-            tableData = objData:data
+            tableData = objData
             params_subdivisions = (sText == "Все подрозделения" ? undefined : sText)
             console.log params_subdivisions
+            addDataChart myChart, tableData
+            # removeDataChart chart
             Imba.commit
-            setTimeout(&,100) do get_chart objData
-            
-    def get_chart oData
-        let ctx = document.getElementById('myChart');
-        let conf = {
-            type: 'horizontalBar',
-            data: {
-                labels: oData:labels,
-                datasets: [{
-                    label: 'Активных',
-                    data: oData:active_vacancies,
-                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                    borderColor: 'rgb(75, 192, 192)',
-                    borderWidth: 1,
-                    order: 1
-                },{
-                    label: 'Всего',
-                    data: oData:total_vacancies,
-                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                    borderColor: 'rgb(255, 99, 132)',
-                    borderWidth: 1,
-                    order: 2
-                }]
+
+    def get_chart
+        let ctx = document:getElementById('myChart')
+        let chart_data = {
+            labels: [],
+            datasets: [{
+                label: 'Активных',
+                data: [],
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgb(75, 192, 192)',
+                borderWidth: 1,
+                order: 1
+            },{
+                label: 'Всего',
+                data: [],
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                borderColor: 'rgb(255, 99, 132)',
+                borderWidth: 1,
+                order: 2
+            }]
+        }
+        let chart_options = {
+            title: {
+                display: true,
+                text: '',
+                fontSize: 16
             },
-            options: {
-                title: {
-                    display: true,
-                    text: '',
-                    fontSize: 16
-                },
-                legend: {
-                    display: true,
-                    position: 'right'
-                },
-                scales: {
-                    xAxes: [{
-                        stacked: true,
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }],
-                    yAxes: [{
-                        stacked: true
-                    }]
-                }
+            legend: {
+                display: true,
+                position: 'right'
+            },
+            scales: {
+                xAxes: [{
+                    stacked: true,
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }],
+                yAxes: [{
+                    stacked: true
+                }]
             }
         }
-        let myChart=Chart.new ctx, conf
+
+        let conf = {
+            type: 'horizontalBar',
+            data: chart_data,
+            options: chart_options
+        }
+
+        myChart=Chart.new ctx, conf
+        # myChart:destroy()
+
+    def addDataChart chart, data
+        console.log 'addDataChart'
+        console.log chart
+        console.log data
+
+        chart:data:labels:push(data:labels)
+        chart:data:datasets:forEach(do |dataset|
+            if dataset:order == 1
+                dataset:data:push(data:active_vacancies)
+            else if dataset:order == 2
+                dataset:data:push(data:total_vacancies)
+        )
+        console.log 'update'
+        console.log chart
+        chart:update()
+
+    def removeDataChart chart
+        chart:data:labels:pop()
+        chart:data:datasets:forEach(do |dataset|
+            dataset:data:pop()
+        )
+        chart:update()
 
     def mount
         selected_sub_opt = undefined
         tableConfig = await Conf("get_conf_table_r1")
-        get_report1
+        get_chart
         get_subdivisions
+        get_report1
 
     def render
         <self>
@@ -104,8 +134,8 @@ export tag Report1
                         <b> "Фильтр"
                     <select.select-css :change.changeSubdivisions>
                         <option selected=(selected_sub_opt==undefined)> "Все подрозделения"
-                        for item in get_subdivisions
-                            <option selected=(selected_sub_opt==item) value=item> item
+                        for item in arrSubdivisions
+                            <option selected=(selected_sub_opt==item:subdivisions_1) value=item:subdivisions_1> item:subdivisions_1
             <div.content_table>
                 <table.table>
                     <thead.font--small=(tableConfig:length>6)>
@@ -115,18 +145,18 @@ export tag Report1
                                     if item:title
                                         <span> item:title
                     <tbody>
-                        for item in tableData
+                        for item in tableData:data
                             if item:vacancies != 'Общий итог'
                                 <tr>
-                                    <td> item:vacancies
-                                    <td css:text-align="right"> item:active_vacancies
-                                    <td css:text-align="right"> item:total_vacancies
+                                    <td css:width="30vw"> item:vacancies
+                                    <td css:text-align="right" css:width="10vw"> item:active_vacancies
+                                    <td css:text-align="right" css:width="10vw"> item:total_vacancies
                             else
                                 <tr>
-                                    <td.total> item:vacancies
-                                    <td.total css:text-align="right"> item:active_vacancies
-                                    <td.total css:text-align="right"> item:total_vacancies
+                                    <td.total css:width="30vw"> item:vacancies
+                                    <td.total css:text-align="right" css:width="10vw"> item:active_vacancies
+                                    <td.total css:text-align="right" css:width="10vw"> item:total_vacancies
                         
             <div.content_chart>
-                <canvas id="myChart" width="500" height="100">
+                <canvas id="myChart">
 
