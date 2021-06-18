@@ -55,11 +55,6 @@
 
         .startpage_content
             display flex
-            flex-direction column
-            padding 10px
-            line-height 1.5em
-            font-size 1.5em
-            margin-left 0px
             width 100%
             min-height 400px
             background-color #f5f6fa
@@ -68,7 +63,7 @@
                 width 300px
                 height 300px
                 z-index 1
-                margin auto
+                margin 50px auto
                 top 0
                 right 0
                 bottom 0
@@ -78,12 +73,14 @@
             padding 10px 10px 0px 10px
             
             fieldset
-                display flex
-                flex-direction row
-                justify-content space-between
                 border 1px solid #cdd3e4
                 border-radius 2px
                 padding 5px
+
+                .report_options-div
+                    display flex
+                    flex-direction row
+                    justify-content space-between
                 
                 legend
                     padding 0px 5px 0px 5px
@@ -133,12 +130,12 @@
                 -webkit-appearance none
                 appearance none
                 background-color #fff
-                background-image url("data:image/svg+xml;charset=UTF-8,%3csvg id='Layer_1' version='1.1' viewBox='0 0 512 512' xml:space='preserve' xmlns='http://www.w3.org/2000/svg'%3e%3cstyle%3e.st0%7bfill:%2314748a%7d%3c/style%3e%3cg id='XMLID_174_'%3e%3cpath class='st0' d='M41 315.8c-5.8 0-11.4-1.6-16.4-4.6L6 300v172.5h67.5V297.1l-11 10.2c-5.8 5.5-13.5 8.5-21.5 8.5z' id='XMLID_3390_'/%3e%3cpath class='st0' id='XMLID_183_' d='M143.2 232.4v240.2h67.6V225.5l-34.7-23.7z'/%3e%3cpath class='st0' d='M290.2 273.1c-6.4 0-12.6-1.9-17.9-5.5l-13.3-9.1v214h67.5V251.8L311 265.4c-5.8 5-13.2 7.7-20.8 7.7z' id='XMLID_182_'/%3e%3cpath class='st0' id='XMLID_175_' d='M378.5 472.6H446V148l-67.5 58.7z'/%3e%3cpath d='M401.1 69.3L429 96.4 288.8 217.5l-105.1-71.8c-7.3-5-17.2-4.3-23.7 1.8l-121.6 113-32.3-19.6v44.4l25.1 15.1c7.3 4.4 16.5 3.4 22.8-2.4l120.9-112.4 104.6 71.5c7.1 4.9 16.7 4.3 23.2-1.3l153.7-132.9 23 22.3L506 39.4 401.1 69.3z' id='XMLID_498_' fill='%23232323'/%3e%3c/g%3e%3c/svg%3e"), linear-gradient(to bottom, #ffffff 0%,#e5e5e5 100%)
+                background-image: url("data:image/svg+xml,%3Csvg version='1.1' id='Capa_1' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' style='enable-background:new 0 0 512 512;' xml:space='preserve'%3E%3Cg%3E%3Cpath d='M512,480v32H32H0v-32V0h32v480H512z M448,0L322.031,20.594l30.281,37.031l-266.438,218l20.25,24.75l266.469-218l30.281,37 L448,0z M413.219,182.563L384,146.844V448h64V90.531L413.219,182.563z M192,271.469V448h64V219.125L192,271.469z M101.609,345.406 L96,338.531V448h64V297.625L101.609,345.406z M288,192.938V448h64V140.563L288,192.938z'/%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3C/svg%3E%0A"), linear-gradient(to bottom, #ffffff 0%,#e5e5e5 100%)
                 background-repeat no-repeat, repeat
-                background-position left .7em top 50%, 0 0
-                background-size 1.8em auto, 100%
+                background-position left -25px top 50%, 0 0
+                background-size 100px auto, 100%
             .button-svg_table
-                background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3e%3cpath d='M15 14v-4H9v4h6zm0 1H9v4h6v-4zM4 14h4v-4H4v4zm0 1v2.5A1.5 1.5 0 005.5 19H8v-4H4zm16-1v-4h-4v4h4zm0 1h-4v4h2.5a1.5 1.5 0 001.5-1.5V15zm-5-6V5H9v4h6zM4 9h4V5H5.5A1.5 1.5 0 004 6.5V9zm16 0V6.5A1.5 1.5 0 0018.5 5H16v4h4zM5.5 4h13A2.5 2.5 0 0121 6.5v11a2.5 2.5 0 01-2.5 2.5h-13A2.5 2.5 0 013 17.5v-11A2.5 2.5 0 015.5 4z'/%3e%3c/svg%3e"), linear-gradient(to bottom, #ffffff 0%,#e5e5e5 100%)
+                background-image: url("data:image/svg+xml,%3Csvg version='1.1' id='Capa_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' viewBox='0 0 533.333 533.334' style='enable-background:new 0 0 533.333 533.334;' xml:space='preserve'%3E%3Cg%3E%3Cpath d='M0,33.333V500h533.333V33.333H0z M200,333.333v-100h133.333v100H200z M333.333,366.667v100H200v-100H333.333z M333.333,100 v100H200V100H333.333z M166.667,100v100H33.333V100H166.667z M33.333,233.333h133.333v100H33.333V233.333z M366.667,233.333H500 v100H366.667V233.333z M366.667,200V100H500v100H366.667z M33.333,366.667h133.333v100H33.333V366.667z M366.667,466.667v-100H500 v100H366.667z'/%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3C/svg%3E%0A"), linear-gradient(to bottom, #ffffff 0%,#e5e5e5 100%)
                 
 
         .content_table

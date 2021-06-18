@@ -164,11 +164,12 @@ export tag Report2
                 <fieldset>
                     <legend>
                         <b> "Настройки"
-                    <select.select-css :change.changeSubdivisions>
-                        <option selected=(selected_sub_opt==undefined) value="undefined"> "Все подрозделения"
-                        for item in arrSubdivisions
-                            <option selected=(selected_sub_opt==item:subdivisions_1) value=item:subdivisions_1> item:subdivisions_1
-                    <button.button-css.button-svg_table=(is_show_chart == true) :click=(do button_selection) disabled=(tableData:length==0)> button_title
+                    <div.report_options-div>
+                        <select.select-css :change.changeSubdivisions>
+                            <option selected=(selected_sub_opt==undefined) value="undefined"> "Все подрозделения"
+                            for item in arrSubdivisions
+                                <option selected=(selected_sub_opt==item:subdivisions_1) value=item:subdivisions_1> item:subdivisions_1
+                        <button.button-css.button-svg_table=(is_show_chart == true) :click=(do button_selection) disabled=(tableData:length==0)> button_title
             <div.content_table css:display="{display_table}">
                 <table.table>
                     <thead.font--small=(tableConfig:length>6)>
