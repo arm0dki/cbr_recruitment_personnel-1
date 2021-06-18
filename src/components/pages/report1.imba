@@ -1,4 +1,5 @@
 import {fromToServer} from '../util/fromToServer'
+import {arraySum} from '../util/helpers'
 import {Conf} from '../../server'
 
 export tag Report1
@@ -13,6 +14,10 @@ export tag Report1
     let int_total_vacancies = 0
     let selected_sub_opt
     let myChart
+    let button_title = 'График'
+    let is_show_chart = false
+    let display_table = 'flex'
+    let display_chart = 'none'
 
     def get_subdivisions
         if mode=="production"
@@ -21,27 +26,28 @@ export tag Report1
                 Imba.commit
         else
             arrSubdivisions = [{subdivisions_1: 'роль 1'}, {subdivisions_1: 'роль 2'}, {subdivisions_1: 'роль 3'}]
+            Imba.commit
 
     def changeSubdivisions e
         selected_sub_opt= e:_event:target:value
         get_report1 selected_sub_opt
 
     def get_report1 sText
-        let params_subdivisions
         if mode=="production"
-            params_subdivisions = (sText == "Все подрозделения" ? undefined : sText)
-            params = '&'+ URLSearchParams.new({report: '1', subdivision: params_subdivisions}).toString
+            params = '&'+ URLSearchParams.new({report: '1', subdivision: sText}).toString
             server.load("&action=get_report"+params).then do |data|
                 tableData = data:data
-                setTimeout(&,100) do get_chart tableData
+                total tableData
+                removeDataChart myChart
+                addDataChart myChart, tableData
                 Imba.commit
         else
             objData = await Conf("get_data_table_r1")
             tableData = objData
-            params_subdivisions = (sText == "Все подрозделения" ? undefined : sText)
-            console.log params_subdivisions
+            console.log sText
+            total tableData
+            removeDataChart myChart
             addDataChart myChart, tableData
-            # removeDataChart chart
             Imba.commit
 
     def get_chart
@@ -94,33 +100,49 @@ export tag Report1
         }
 
         myChart=Chart.new ctx, conf
-        # myChart:destroy()
 
     def addDataChart chart, data
-        console.log 'addDataChart'
-        console.log chart
-        console.log data
-
-        chart:data:labels:push(data:labels)
+        for item in data:labels
+            chart:data:labels:push(item)
         chart:data:datasets:forEach(do |dataset|
             if dataset:order == 1
-                dataset:data:push(data:active_vacancies)
+                for item in data:active_vacancies
+                    dataset:data:push(item)
             else if dataset:order == 2
-                dataset:data:push(data:total_vacancies)
+                for item in data:total_vacancies
+                    dataset:data:push(item)
         )
-        console.log 'update'
-        console.log chart
         chart:update()
 
     def removeDataChart chart
-        chart:data:labels:pop()
+        chart:data:labels = []
         chart:data:datasets:forEach(do |dataset|
-            dataset:data:pop()
+            dataset:data = []
         )
         chart:update()
 
+    def button_selection
+        is_show_chart = (is_show_chart) ? false : true
+        if is_show_chart
+            button_title = 'Таблица'
+            display_table = 'none'
+            display_chart = 'flex'
+        else
+            button_title = 'График'
+            display_table = 'flex'
+            display_chart = 'none'
+
+    def total obj
+        let total = {}
+        total:vacancies = 'Общий итог'
+        total:active_vacancies = arraySum obj:active_vacancies
+        total:total_vacancies = arraySum obj:total_vacancies
+        obj:data:push(total)
+
     def mount
         selected_sub_opt = undefined
+        is_show_chart = false
+        button_title = 'График'
         tableConfig = await Conf("get_conf_table_r1")
         get_chart
         get_subdivisions
@@ -128,20 +150,21 @@ export tag Report1
 
     def render
         <self>
-            <div.filter>
+            <div.report_options>
                 <fieldset>
                     <legend>
-                        <b> "Фильтр"
+                        <b> "Настройки"
                     <select.select-css :change.changeSubdivisions>
-                        <option selected=(selected_sub_opt==undefined)> "Все подрозделения"
+                        <option  selected=(selected_sub_opt==undefined) value="undefined"> "Все подрозделения"
                         for item in arrSubdivisions
                             <option selected=(selected_sub_opt==item:subdivisions_1) value=item:subdivisions_1> item:subdivisions_1
-            <div.content_table>
+                    <button.button-css.button-svg_table=(is_show_chart == true) :click=(do button_selection) disabled=(tableData:length==0)> button_title
+            <div.content_table css:display="{display_table}">
                 <table.table>
                     <thead.font--small=(tableConfig:length>6)>
                         <tr>
-                            for item in tableConfig
-                                <th css:width="{item:width}">
+                            for item,index in tableConfig
+                                <th.th_left=(index==0) css:width="{item:width}">
                                     if item:title
                                         <span> item:title
                     <tbody>
@@ -155,8 +178,7 @@ export tag Report1
                                 <tr>
                                     <td.total css:width="30vw"> item:vacancies
                                     <td.total css:text-align="right" css:width="10vw"> item:active_vacancies
-                                    <td.total css:text-align="right" css:width="10vw"> item:total_vacancies
-                        
-            <div.content_chart>
+                                    <td.total css:text-align="right" css:width="10vw"> item:total_vacancies            
+            <div.content_chart css:display="{display_chart}">
                 <canvas id="myChart">
 

@@ -9,16 +9,15 @@ export var oConfTableReport1=[
 
 export var oConfTableReport2=[
 	{title:'Вакансии', width:'30vw'},
-	{title:'Направлено заказчику', width:'10vw'},
-	{title:'Интервью с заказчиком', width:'10vw'},
-	{title:'Финалисты', width:'10vw'}
+	{title:'Направлено заказчику', width:'11vw'},
+	{title:'Интервью с заказчиком', width:'11vw'},
+	{title:'Финалистов', width:'11vw'}
 ]
 
 export var tableDataReport1={data: [
 	{vacancies: 'Главный эксперт', active_vacancies: 2, total_vacancies: 10},
 	{vacancies: 'Ведущий эксперт', active_vacancies: 5, total_vacancies: 10},
-	{vacancies: 'Эксперт', active_vacancies: 8, total_vacancies: 10},
-	{vacancies: 'Общий итог', active_vacancies: 15, total_vacancies: 30}], 
+	{vacancies: 'Эксперт', active_vacancies: 8, total_vacancies: 10}], 
 labels: ['Главный экспер', 'Ведущий экспер', 'Эксперт'], 
 active_vacancies: [3,5,8], 
 total_vacancies: [10,10,10]
@@ -27,8 +26,7 @@ total_vacancies: [10,10,10]
 export var tableDataReport2={data: [
 	{vacancies: 'Главный эксперт', resume: 20, interview: 50, finalists: 0},
 	{vacancies: 'Ведущий эксперт', resume: 30, interview: 50, finalists: 40},
-	{vacancies: 'Эксперт', resume: 40, interview: 50, finalists: 50},
-	{vacancies: 'Общий итог', resume: 90, interview: 150, finalists: 90}], 
+	{vacancies: 'Эксперт', resume: 40, interview: 50, finalists: 50}], 
 labels: ['Главный экспер', 'Ведущий экспер', 'Эксперт'], 
 resume: [20,30,40], 
 interview: [50,50,50],
