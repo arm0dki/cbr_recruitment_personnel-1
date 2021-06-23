@@ -23,6 +23,17 @@ active_vacancies: [3,5,8],
 total_vacancies: [10,10,10]
 }
 
+export var tableDataReport1_v1={data: [
+	{vacancies: 'Главный эксперт1', active_vacancies: 5, total_vacancies: 50},
+	{vacancies: 'Ведущий эксперт2', active_vacancies: 5, total_vacancies: 50},
+	{vacancies: 'Ведущий эксперт3', active_vacancies: 5, total_vacancies: 50},
+	{vacancies: 'Ведущий эксперт4', active_vacancies: 5, total_vacancies: 50},
+	{vacancies: 'Эксперт1', active_vacancies: 10, total_vacancies: 20}], 
+labels: ['Главный экспер1', 'Ведущий экспер1', 'Ведущий экспер2', 'Ведущий экспер3', 'Ведущий экспер4', 'Эксперт1'], 
+active_vacancies: [5,5,5,5,5,10], 
+total_vacancies: [50,50,50,50,50,20]
+}
+
 export var tableDataReport2={data: [
 	{vacancies: 'Главный эксперт', resume: 20, interview: 50, finalists: 0},
 	{vacancies: 'Ведущий эксперт', resume: 30, interview: 50, finalists: 40},
@@ -36,6 +47,7 @@ finalists: [0,40,50]
 var endpoints = {
 	'get_conf_table_r1': oConfTableReport1,
 	'get_data_table_r1': tableDataReport1,
+	'tableDataReport1_v1': tableDataReport1_v1,
 	'get_conf_table_r2': oConfTableReport2,
 	'get_data_table_r2': tableDataReport2
 }

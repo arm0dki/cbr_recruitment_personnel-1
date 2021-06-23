@@ -13,7 +13,7 @@ export tag Report1
     let int_active_vacancies = 0
     let int_total_vacancies = 0
     let selected_sub_opt
-    let myChart
+    let myChart_rep1
     let button_title = 'График'
     let is_show_chart = false
     let display_table = 'flex'
@@ -25,7 +25,7 @@ export tag Report1
                 arrSubdivisions = data:data
                 Imba.commit
         else
-            arrSubdivisions = [{subdivisions_1: 'роль 1'}, {subdivisions_1: 'роль 2'}, {subdivisions_1: 'роль 3'}]
+            arrSubdivisions = [{subdivisions_1: 'Подразделение 1'}, {subdivisions_1: 'Подразделение 2'}, {subdivisions_1: 'Подразделение 3'}]
             Imba.commit
 
     def changeSubdivisions e
@@ -38,16 +38,18 @@ export tag Report1
             server.load("&action=get_report"+params).then do |data|
                 tableData = data:data
                 total tableData
-                removeDataChart myChart
-                addDataChart myChart, tableData
+                removeDataChart myChart_rep1
+                addDataChart myChart_rep1, tableData
                 Imba.commit
         else
             objData = await Conf("get_data_table_r1")
+            if sText == 'Подразделение 1'
+                objData = await Conf("tableDataReport1_v1")
             tableData = objData
             console.log sText
             total tableData
-            removeDataChart myChart
-            addDataChart myChart, tableData
+            removeDataChart myChart_rep1
+            addDataChart myChart_rep1, tableData
             Imba.commit
 
     def get_chart
@@ -99,7 +101,7 @@ export tag Report1
             options: chart_options
         }
 
-        myChart=Chart.new ctx, conf
+        myChart_rep1=Chart.new ctx, conf
 
     def addDataChart chart, data
         for item in data:labels
@@ -147,6 +149,9 @@ export tag Report1
         get_chart
         get_subdivisions
         get_report1
+
+    def unmount
+        myChart_rep1:destroy()
 
     def render
         <self>

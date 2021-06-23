@@ -17,7 +17,7 @@ export tag MainPage
 				<span route-to="/{_path}report1"> "Отчёт 1"
 				<span route-to="/{_path}report2"> "Отчёт 2"
 			<div.recruitment_content>
-				# <StartPage route="/{_path.replace('&page=','')}/*$">
+				<StartPage route="/{_path.replace('&page=','')}/*$">
 				<StartPage route="/{_path}start_page">
 				<Report1 route="/{_path}report1">
 				<Report2 route="/{_path}report2">

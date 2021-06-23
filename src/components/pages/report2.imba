@@ -13,7 +13,7 @@ export tag Report2
     let int_active_vacancies = 0
     let int_total_vacancies = 0
     let selected_sub_opt
-    let myChart
+    let myChart_rep2
     let button_title = 'График'
     let is_show_chart = false
     let display_table = 'flex'
@@ -39,16 +39,16 @@ export tag Report2
                 tableData = data:data
                 console.log tableData
                 total tableData
-                removeDataChart myChart
-                addDataChart myChart, tableData
+                removeDataChart myChart_rep2
+                addDataChart myChart_rep2, tableData
                 Imba.commit
         else
             objData = await Conf("get_data_table_r2")
             tableData = objData
             console.log sText
             total tableData
-            removeDataChart myChart
-            addDataChart myChart, tableData
+            removeDataChart myChart_rep2
+            addDataChart myChart_rep2, tableData
             Imba.commit
 
     def get_chart
@@ -104,7 +104,7 @@ export tag Report2
             options: chart_options
         }
 
-        myChart=Chart.new ctx, conf
+        myChart_rep2=Chart.new ctx, conf
 
     def addDataChart chart, data
         console.log data
@@ -157,6 +157,9 @@ export tag Report2
         get_subdivisions
         get_chart
         get_report2
+
+    def unmount
+        myChart_rep2:destroy()
 
     def render
         <self>
