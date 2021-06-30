@@ -161,7 +161,7 @@ export tag Report1
                         <b> "Настройки"
                     <div.report_options-div>    
                         <select.select-css :change.changeSubdivisions>
-                            <option  selected=(selected_sub_opt==undefined) value="undefined"> "Все подрозделения"
+                            <option  selected=(selected_sub_opt==undefined) value="undefined"> "Все подразделения"
                             for item in arrSubdivisions
                                 <option selected=(selected_sub_opt==item:subdivisions_1) value=item:subdivisions_1> item:subdivisions_1
                         <button.button-css.button-svg_table=(is_show_chart == true) :click=(do button_selection) disabled=(tableData:length==0)> button_title
