@@ -12,7 +12,7 @@
     font-family Stem,sans-serif
 
     .recruitment_header-title
-        margin 20px 0 0 0
+        margin 20px 0
         color #08c
         text-align: center
 
@@ -70,7 +70,7 @@
                 left 0
 
         .report_options
-            padding 10px 10px 0px 10px
+            padding 10px
             
             fieldset
                 border 1px solid #cdd3e4
@@ -80,10 +80,10 @@
                 .report_options-div
                     display flex
                     flex-direction row
-                    justify-content space-between
+                    justify-content space-start
                 
                 legend
-                    padding 0px 5px 0px 5px
+                    padding 0px 5px 0px 5px   
             .select-css
                 display block 
                 width 250px
@@ -91,7 +91,7 @@
                 line-height 1.3
                 padding .6em 1.4em .5em .8em
                 box-sizing border-box
-                margin 0
+                margin 0 10px 0 0
                 border 1px solid #cdd3e4
                 box-shadow 0 1px 0 1px rgba(0,0,0,.04)
                 -moz-appearance none
@@ -102,6 +102,8 @@
                 background-repeat no-repeat, repeat
                 background-position right .7em top 50%, 0 0
                 background-size .65em auto, 100% 
+            .select-css_big   
+                width 300px 
 
             .select-css::-ms-expand
                 display none 
@@ -114,73 +116,87 @@
                 font-weight normal 
             *[dir="rtl"] .select-css, :root:lang(ar) .select-css, :root:lang(iw) .select-css
                 background-position left .7em top 50%, 0 0
-                padding .6em .8em .5em 1.4em
+                padding .6em .8em .5em 1.4em  
 
-            .button-css
-                display flex
-                width 150px
-                color #444
-                line-height 1.3
-                padding 0.7em 0.4em 0.5em 3em
-                box-sizing border-box
-                margin 0
-                border 1px solid #cdd3e4
-                box-shadow 0 1px 0 1px rgba(0,0,0,.04)
-                -moz-appearance none
-                -webkit-appearance none
-                appearance none
-                background-color #fff
-                background-image: url("data:image/svg+xml,%3Csvg version='1.1' id='Capa_1' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' style='enable-background:new 0 0 512 512;' xml:space='preserve'%3E%3Cg%3E%3Cpath d='M512,480v32H32H0v-32V0h32v480H512z M448,0L322.031,20.594l30.281,37.031l-266.438,218l20.25,24.75l266.469-218l30.281,37 L448,0z M413.219,182.563L384,146.844V448h64V90.531L413.219,182.563z M192,271.469V448h64V219.125L192,271.469z M101.609,345.406 L96,338.531V448h64V297.625L101.609,345.406z M288,192.938V448h64V140.563L288,192.938z'/%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3C/svg%3E%0A"), linear-gradient(to bottom, #ffffff 0%,#e5e5e5 100%)
-                background-repeat no-repeat, repeat
-                background-position left -25px top 50%, 0 0
-                background-size 100px auto, 100%
-            .button-svg_table
-                background-image: url("data:image/svg+xml,%3Csvg version='1.1' id='Capa_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' viewBox='0 0 533.333 533.334' style='enable-background:new 0 0 533.333 533.334;' xml:space='preserve'%3E%3Cg%3E%3Cpath d='M0,33.333V500h533.333V33.333H0z M200,333.333v-100h133.333v100H200z M333.333,366.667v100H200v-100H333.333z M333.333,100 v100H200V100H333.333z M166.667,100v100H33.333V100H166.667z M33.333,233.333h133.333v100H33.333V233.333z M366.667,233.333H500 v100H366.667V233.333z M366.667,200V100H500v100H366.667z M33.333,366.667h133.333v100H33.333V366.667z M366.667,466.667v-100H500 v100H366.667z'/%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3C/svg%3E%0A"), linear-gradient(to bottom, #ffffff 0%,#e5e5e5 100%)
-                
-
-        .content_table
-            padding 10px 10px 20px 10px
+        .content_chart
             display flex
-            justify-content center
-            .font--small
-                font-size 10px
-            .table
-                border-collapse separate
-                border-spacing 0
-                tr:hover
-                    background-color #d8d8d8
-                tr
-                    position relative
-                    .th_left
-                        text-align left
-
-                    th
-                        font-weight 500
-                        letter-spacing 0.01em
-                        text-transform uppercase
-                        text-align right
-                        outline none
-                        color #8F97AC
-                        background #F5F6FA
-                        border: 1px solid #CDD3E4
-                        height 63px
-                        line-height 1.16666667
-                        span
-                            padding-right 14px
-                            display inline-block
+            flex-direction row
+            flex-wrap nowrap
+            justify-content space-around
+            .content_button
+                display flex
+                flex-direction row
+                justify-content flex-end
+                .button-css
+                    display flex
+                    width 30px
+                    height 30px
+                    color #444
+                    line-height 1.3
+                    padding 0.7em 0.4em 0.5em 3em
+                    box-sizing border-box
+                    margin 0
+                    border 1px solid #cdd3e4
+                    box-shadow 0 1px 0 1px rgba(0,0,0,.04)
+                    -moz-appearance none
+                    -webkit-appearance none
+                    appearance none
+                    background-color #fff
+                    background-image: url("data:image/svg+xml,%3Csvg version='1.1' id='Capa_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' viewBox='0 0 533.333 533.334' style='enable-background:new 0 0 533.333 533.334;' xml:space='preserve'%3E%3Cg%3E%3Cpath d='M0,33.333V500h533.333V33.333H0z M200,333.333v-100h133.333v100H200z M333.333,366.667v100H200v-100H333.333z M333.333,100 v100H200V100H333.333z M166.667,100v100H33.333V100H166.667z M33.333,233.333h133.333v100H33.333V233.333z M366.667,233.333H500 v100H366.667V233.333z M366.667,200V100H500v100H366.667z M33.333,366.667h133.333v100H33.333V366.667z M366.667,466.667v-100H500 v100H366.667z'/%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3C/svg%3E%0A"), linear-gradient(to bottom, #ffffff 0%,#e5e5e5 100%)
+                    //background-image: url("data:image/svg+xml,%3Csvg version='1.1' id='Capa_1' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' style='enable-background:new 0 0 512 512;' xml:space='preserve'%3E%3Cg%3E%3Cpath d='M512,480v32H32H0v-32V0h32v480H512z M448,0L322.031,20.594l30.281,37.031l-266.438,218l20.25,24.75l266.469-218l30.281,37 L448,0z M413.219,182.563L384,146.844V448h64V90.531L413.219,182.563z M192,271.469V448h64V219.125L192,271.469z M101.609,345.406 L96,338.531V448h64V297.625L101.609,345.406z M288,192.938V448h64V140.563L288,192.938z'/%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3C/svg%3E%0A"), linear-gradient(to bottom, #ffffff 0%,#e5e5e5 100%)
+                    background-repeat no-repeat, repeat
+                    background-position left -25px top 50%, 0 0
+                    background-size 100px auto, 100%
+                .button-svg_table
+                    background-image: url("data:image/svg+xml,%3Csvg version='1.1' id='Capa_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' viewBox='0 0 533.333 533.334' style='enable-background:new 0 0 533.333 533.334;' xml:space='preserve'%3E%3Cg%3E%3Cpath d='M0,33.333V500h533.333V33.333H0z M200,333.333v-100h133.333v100H200z M333.333,366.667v100H200v-100H333.333z M333.333,100 v100H200V100H333.333z M166.667,100v100H33.333V100H166.667z M33.333,233.333h133.333v100H33.333V233.333z M366.667,233.333H500 v100H366.667V233.333z M366.667,200V100H500v100H366.667z M33.333,366.667h133.333v100H33.333V366.667z M366.667,466.667v-100H500 v100H366.667z'/%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3Cg%3E%3C/g%3E%3C/svg%3E%0A"), linear-gradient(to bottom, #ffffff 0%,#e5e5e5 100%)
+              
+            .content_chart1, .content_chart2
+                display flex
+                flex-direction column
+                justify-content flex-start
+                flex-wrap nowrap                
+                width 45%
+                .content_table
+                    margin 20px 0
+                    .font--small
+                        font-size 10px
+                    .table
+                        border-collapse separate
+                        border-spacing 0
+                        tr:hover
+                            background-color #d8d8d8
+                        tr
                             position relative
-                            text-align right
-                    td
-                        padding 4px 10px 4px 0
-                        height 40px
-                        font-size 14px
-                        line-height 1.14285714
-                        letter-spacing 0.01em
-                        border: 1px solid #CDD3E4
-                        //border-bottom 1px solid #CDD3E4
+                            .th_left
+                                text-align left
 
-                    .total
-                        background #e1e4f1
-                        font-weight 700
-                    td,th
-                        padding-left 10px
+                            th
+                                font-weight 500
+                                letter-spacing 0.01em
+                                text-transform uppercase
+                                text-align right
+                                outline none
+                                color #8F97AC
+                                background #F5F6FA
+                                border: 1px solid #CDD3E4
+                                height 63px
+                                line-height 1.16666667
+                                span
+                                    padding-right 14px
+                                    display inline-block
+                                    position relative
+                                    text-align right
+                            td
+                                padding 4px 10px 4px 0
+                                height 40px
+                                font-size 14px
+                                line-height 1.14285714
+                                letter-spacing 0.01em
+                                border: 1px solid #CDD3E4
+                                //border-bottom 1px solid #CDD3E4
+
+                            .total
+                                background #e1e4f1
+                                font-weight 700
+                            td,th
+                                padding-left 10px       
