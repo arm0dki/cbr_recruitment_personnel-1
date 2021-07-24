@@ -2,11 +2,14 @@ import {fromToServer} from '../util/fromToServer'
 import {arraySum} from '../util/helpers'
 import {Conf} from '../../server'
 
+const ChartDataLabels = require('chartjs-plugin-datalabels')
+
 export tag Report
 
     let tableData1=[]
     let tableData2=[]    
-    let arrSubdivisions=[]
+    let arr_report_options=[]
+    let arr_options_sub2=[]
     let objData={}
     let tableConfig1=[]
     let tableConfig2=[]   
@@ -14,7 +17,9 @@ export tag Report
     let mode = window.TARGET_ENV
     let int_active_vacancies = 0
     let int_total_vacancies = 0
-    let selected_sub_opt
+    let selected_opt_sub1
+    let selected_opt_sub2
+    let selected_opt_period    
     let myChart_rep1
     let myChart_rep2
     let button_title = 'График'
@@ -22,53 +27,66 @@ export tag Report
     let display_table1 = 'none'
     let display_table2 = 'none'
 
-    def get_subdivisions
+    def ger_report_options
         if mode=="production"
-            server.load("&action=get_subdivisions").then do |data|
-                arrSubdivisions = data:data
+            server.load("&action=get_report_options").then do |data|
+                arr_report_options = data:data
                 Imba.commit
         else
-            arrSubdivisions = [{subdivisions_1: 'Подразделение 1'}, {subdivisions_1: 'Подразделение 2'}, {subdivisions_1: 'Подразделение 3'}]
+            arr_report_options = await Conf("get_report_options")
             Imba.commit
 
-    def changeSubdivisions e
-        selected_sub_opt= e:_event:target:value
-        get_report1 selected_sub_opt
+    def change_opt_sub1 e
+        selected_opt_sub1= e:_event:target:value
+        arr_options_sub2=arr_report_options:subdivisions_3:filter(do |el| el:subdivisions_2_id==selected_opt_sub1)
+        selected_opt_sub2 = 'all'
+        get_report1
+        get_report2
+    def change_opt_sub2 e
+        selected_opt_sub2= e:_event:target:value
+        get_report1
+        get_report2
+    def change_opt_period e
+        selected_opt_period= e:_event:target:value
+        get_report2             
 
-    def get_report1 sText
+    def get_report1
         if mode=="production"
-            params = '&'+ URLSearchParams.new({report: '1', subdivision: sText}).toString
+            params = '&'+ URLSearchParams.new({report: '1', sub1: selected_opt_sub1, sub2: selected_opt_sub2, period: selected_opt_period}).toString
             server.load("&action=get_report"+params).then do |data|
                 tableData1 = data:data
-                total tableData1
-                removeDataChart1 myChart_rep1
-                addDataChart1 myChart_rep1, tableData1
+                if tableData1 != undefined
+                    total tableData1
+                    removeDataChart1 myChart_rep1
+                    addDataChart1 myChart_rep1, tableData1
+                else
+                    removeDataChart1 myChart_rep1 
                 Imba.commit
         else
             objData = await Conf("get_data_table_r1")
-            if sText == 'Подразделение 1'
+            if selected_opt_sub1 == 'Подразделение 1'
                 objData = await Conf("tableDataReport1_v1")
             tableData1 = objData
-            console.log sText
             # total tableData
             removeDataChart1 myChart_rep1
             addDataChart1 myChart_rep1, tableData1
             Imba.commit
 
-    def get_report2 sText
+    def get_report2
         if mode=="production"
-            params = '&'+ URLSearchParams.new({report: '2', subdivision: sText}).toString
+            params = '&'+ URLSearchParams.new({report: '2', sub1: selected_opt_sub1, sub2: selected_opt_sub2, period: selected_opt_period}).toString
             server.load("&action=get_report"+params).then do |data|
                 tableData2 = data:data
-                console.log tableData2
-                total tableData2
-                removeDataChart2 myChart_rep2
-                addDataChart2 myChart_rep2, tableData2
+                if tableData2 != undefined
+                    total tableData2
+                    removeDataChart2 myChart_rep2
+                    addDataChart2 myChart_rep2, tableData2
+                else
+                    removeDataChart2 myChart_rep2
                 Imba.commit
         else
             objData = await Conf("get_data_table_r2")
             tableData2 = objData
-            console.log sText
             # total tableData
             removeDataChart2 myChart_rep2
             addDataChart2 myChart_rep2, tableData2
@@ -95,31 +113,48 @@ export tag Report
             }]
         }
         let chart_options = {
+            plugins: {
+                datalabels: {
+                    formatter: do |value| return value > 0 ? value : '',
+                    font: do |context| return {size: context:dataset:data:length > 20 ? 8 : 10, weight: 'bold'}               
+                }
+            },            
             title: {
                 display: true,
-                text: 'Отчёт 1',
+                text: 'Вакансии в подборе',
                 fontSize: 16
             },
             legend: {
+                labels: {
+                    fontSize: 10
+                },                
                 display: true,
-                position: 'top'
+                position: 'top',
+                fullSize: true
             },
             scales: {
                 xAxes: [{
                     stacked: true,
                     ticks: {
-                        beginAtZero: true
+                        beginAtZero: true,
+                        fontSize: 10
                     },
                     scaleLabel: {
                         display: true,
-                        labelString: 'Количество'
+                        labelString: 'Количество',
+                        fontSize: 10
                     }
                 }],
                 yAxes: [{
+                    ticks: {
+                        beginAtZero: true,
+                        fontSize: 10
+                    },                    
                     stacked: true,
                     scaleLabel: {
                         display: true,
-                        labelString: 'Вакансии'
+                        labelString: 'Вакансии',
+                        fontSize: 10
                     }
                 }]
             }
@@ -127,6 +162,7 @@ export tag Report
 
         let conf = {
             type: 'horizontalBar',
+            plugins: [ChartDataLabels],
             data: chart_data,
             options: chart_options
         }
@@ -162,49 +198,56 @@ export tag Report
         }
         let chart_options = {
             responsive: true,
+            plugins: {               
+                datalabels: {
+                    formatter: do |value| return value > 0 ? value : '',
+                    font: do |context| return {size: context:dataset:data:length > 20 ? 8 : 10, weight: 'bold'} 
+                }                         
+            },             
             title: {
                 display: true,
-                text: 'Отчёт 2',
+                text: 'Статистика за период',
                 fontSize: 16
             },
             legend: {
+                labels: {
+                    fontSize: 10
+                },              
                 display: true,
-                position: 'top'
+                position: 'top',
+                fullSize: true
             },
             scales: {
                 xAxes: [{
                     ticks: {
-                        beginAtZero: true
+                        beginAtZero: true,
+                        fontSize: 10
                     },
                     scaleLabel: {
                         display: true,
-                        labelString: 'Вакансии'
+                        labelString: 'Вакансии',
+                        fontSize: 10
                     }
                 }],
                 yAxes: [{
                     scaleLabel: {
                         display: true,
-                        labelString: 'Количество'
+                        labelString: 'Количество',
+                        fontSize: 10
                     }
                 }]
-            },
-            layout: {
-                padding: {
-                    left: 50,
-                    right: 0,
-                    top: 0,
-                    bottom: 0
-                }
-            }   
+            }  
         }
 
         let conf = {
             type: 'bar',
+            plugins: [ChartDataLabels],
             data: chart_data,
             options: chart_options
         }
 
         myChart_rep2=Chart.new ctx, conf
+        console.log myChart_rep2
 
 
     def addDataChart1 chart, data
@@ -241,6 +284,8 @@ export tag Report
                 for item in data:finalists
                     dataset:data:push(item)
         )
+        # chart:options:scales:yAxes[0]:scaleLabel:fontSize = chart:config:data:labels:length > 20 ? 10 : 12
+        # chart:options:scales:xAxes[0]:scaleLabel:fontSize = chart:config:data:labels:length > 20 ? 10 : 12
         chart:update()
 
     def removeDataChart2 chart
@@ -265,14 +310,16 @@ export tag Report
         obj:data:push(total)
 
     def mount
-        selected_sub_opt = undefined
+        selected_opt_sub1 = "all"
+        selected_opt_sub2 = "all"
+        selected_opt_period = "all"        
         is_show_chart = false
         button_title = 'График'
         tableConfig1 = await Conf("get_conf_table_r1")
         tableConfig2 = await Conf("get_conf_table_r2")
         get_chart1
         get_chart2
-        get_subdivisions
+        ger_report_options
         get_report1
         get_report2
 
@@ -283,19 +330,24 @@ export tag Report
                     <legend>
                         <b> "Фильтр"
                     <div.report_options-div>    
-                        <select.select-css :change.changeSubdivisions>
-                            <option  selected=(selected_sub_opt==undefined) value="undefined"> "Все управления"
-                            for item in arrSubdivisions
-                                <option selected=(selected_sub_opt==item:subdivisions_1) value=item:subdivisions_1> item:subdivisions_1
-                        <select.select-css>
-                            <option  value="undefined"> "Все отделы"
-                        <select.select-css.select-css_big>
-                            <option disabled selected=(selected_sub_opt==undefined) value="undefined"> "Резюме, собеседования за период"          
+                        <select.select-css :change.change_opt_sub1>
+                            <option  selected=(selected_opt_sub1=="all") value="all"> "Все управления"
+                            for item in arr_report_options:subdivisions_2
+                                <option selected=(selected_opt_sub1==item:subdivisions_2_id) value=item:subdivisions_2_id> item:subdivisions_2_fullname
+                        <select.select-css :change.change_opt_sub2>
+                            <option  selected=(selected_opt_sub2=="all") value="all"> "Все отделы"
+                            for item in arr_options_sub2
+                                <option selected=(selected_opt_sub2==item:subdivisions_3_id) value=item:subdivisions_3_id> item:subdivisions_3_fullname                            
+                        <select.select-css :change.change_opt_period>
+                            <option selected=(selected_opt_period=="all") value="all"> "За весь период"
+                            for item in arr_report_options:period
+                                <option selected=(selected_opt_period==item:month_id) value=item:month_id> item:month_name                                      
             <div.content_chart>
                 <div.content_chart1>
-                    <div.content_button>
-                        <button.button-css disabled=(tableData1:length==0) :click=(do button_selection 'left')>
-                    <canvas id="myChart1">
+                    # <div.content_button>
+                    #    <button.button-css disabled=(tableData1:length==0) :click=(do button_selection 'left')>
+                    <canvas id="myChart2">
+                    ###
                     <div.content_table css:display="{display_table1}">
                         <table.table>
                             <thead.font--small=(tableConfig1:length>6)>
@@ -315,11 +367,13 @@ export tag Report
                                         <tr>
                                             <td.total css:width="30vw"> item:vacancies
                                             <td.total css:text-align="right" css:width="10vw"> item:active_vacancies
-                                            <td.total css:text-align="right" css:width="10vw"> item:total_vacancies                     
+                                            <td.total css:text-align="right" css:width="10vw"> item:total_vacancies 
+                    ###                    
                 <div.content_chart2> 
-                    <div.content_button>
-                        <button.button-css disabled=(tableData2:length==0) :click=(do button_selection 'right')>                               
-                    <canvas id="myChart2">
+                    # <div.content_button>
+                    #    <button.button-css disabled=(tableData2:length==0) :click=(do button_selection 'right')>                               
+                    <canvas id="myChart1">
+                    ###
                     <div.content_table css:display="{display_table2}">
                         <table.table>
                             <thead.font--small=(tableConfig2:length>6)>
@@ -341,5 +395,6 @@ export tag Report
                                             <td.total css:width="30vw"> item:vacancies
                                             <td.total css:text-align="right" css:width="11vw"> item:resume
                                             <td.total css:text-align="right" css:width="11vw"> item:interview
-                                            <td.total css:text-align="right" css:width="11vw"> item:finalists                                                       
+                                            <td.total css:text-align="right" css:width="11vw"> item:finalists
+                    ###                                                       
 
