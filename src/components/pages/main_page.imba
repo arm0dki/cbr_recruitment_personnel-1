@@ -13,7 +13,7 @@ export tag MainPage
 	def render
 		<self>
 			<div.recruitment_header-title>
-				<h1> 'Отчётность для руководителя СП'
+				<h1> 'Отчет по подбору для руководителя СП'
 			# <div.recruitment_menu>
 			#	<span route-to="/{_path}report"> "Отчёт"
 			#	<span route-to="/{_path}report2"> "Отчёт 2"

@@ -44,12 +44,27 @@ interview: [50,50,50],
 finalists: [0,40,50]
 }
 
+export var arr_report_options = {subdivisions_1: [
+	{subdivisions_1_id: 1111111, subdivisions_1: 'Управление 1'}, 
+	{subdivisions_1_id: 1111112, subdivisions_1: 'Управление 2'}, 
+	{subdivisions_1_id: 1111113, subdivisions_1: 'Управление 3'}],
+subdivisions_2: [
+	{subdivisions_2_id: 2222222, subdivisions_1_id: 1111111, subdivisions_2: 'Отдел 1'}, 
+	{subdivisions_2_id: 2222221, subdivisions_1_id: 1111111, subdivisions_2: 'Отдел 2'}, 
+	{subdivisions_2_id: 2222223, subdivisions_1_id: 1111113, subdivisions_2: 'Отдел 3'}],
+period: [
+	{month_id: 1, month_name: 'Январь'}, 
+	{month_id: 2, month_name: 'февраль'}, 
+	{month_id: 3, month_name: 'март'}]
+}
+
 var endpoints = {
 	'get_conf_table_r1': oConfTableReport1,
 	'get_data_table_r1': tableDataReport1,
 	'tableDataReport1_v1': tableDataReport1_v1,
 	'get_conf_table_r2': oConfTableReport2,
-	'get_data_table_r2': tableDataReport2
+	'get_data_table_r2': tableDataReport2,
+	'get_report_options': arr_report_options	
 }
 
 export def Conf url
