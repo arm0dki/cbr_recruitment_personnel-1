@@ -17,6 +17,7 @@ export tag Report
     let mode = window.TARGET_ENV
     let int_active_vacancies = 0
     let int_total_vacancies = 0
+    let selected_opt_chart
     let selected_opt_sub1
     let selected_opt_sub2
     let selected_opt_period    
@@ -25,16 +26,35 @@ export tag Report
     let button_title = 'График'
     let is_show_chart = false
     let display_table1 = 'none'
+    let display_chart1 = 'flex'
+    let display_chart2 = 'none'
     let display_table2 = 'none'
+    let display_nodata_chart1 = 'flex'
+    let display_nodata_chart2 = 'flex' 
+    let display_opt_period = 'none'
+    let department_name = ''   
 
     def ger_report_options
         if mode=="production"
             server.load("&action=get_report_options").then do |data|
                 arr_report_options = data:data
+                department_name = "("+arr_report_options:options_title[0]:subdivisions_1_fullname+")"
                 Imba.commit
         else
             arr_report_options = await Conf("get_report_options")
             Imba.commit
+
+    def change_opt_chart e
+        selected_opt_chart= e:_event:target:value
+        display_chart1 = (display_chart1 == 'none') ? 'flex' : 'none'
+        display_chart2 = (display_chart2 == 'none') ? 'flex' : 'none'
+        if selected_opt_chart == 1
+            display_opt_period='none'
+            get_report1
+        if selected_opt_chart == 2
+            selected_opt_period="all"
+            display_opt_period='block'
+            get_report2
 
     def change_opt_sub1 e
         selected_opt_sub1= e:_event:target:value
@@ -52,14 +72,16 @@ export tag Report
 
     def get_report1
         if mode=="production"
-            params = '&'+ URLSearchParams.new({report: '1', sub1: selected_opt_sub1, sub2: selected_opt_sub2, period: selected_opt_period}).toString
+            params = '&'+ URLSearchParams.new({report: '1', sub1: selected_opt_sub1, sub2: selected_opt_sub2, period: "all"}).toString
             server.load("&action=get_report"+params).then do |data|
                 tableData1 = data:data
                 if tableData1 != undefined
+                    display_nodata_chart1 = 'flex'
                     total tableData1
                     removeDataChart1 myChart_rep1
                     addDataChart1 myChart_rep1, tableData1
                 else
+                    display_nodata_chart1 = 'none'
                     removeDataChart1 myChart_rep1 
                 Imba.commit
         else
@@ -78,10 +100,12 @@ export tag Report
             server.load("&action=get_report"+params).then do |data|
                 tableData2 = data:data
                 if tableData2 != undefined
+                    display_nodata_chart2 = 'flex'                
                     total tableData2
                     removeDataChart2 myChart_rep2
                     addDataChart2 myChart_rep2, tableData2
                 else
+                    display_nodata_chart2 = 'none'                                 
                     removeDataChart2 myChart_rep2
                 Imba.commit
         else
@@ -122,7 +146,7 @@ export tag Report
             title: {
                 display: true,
                 text: 'Вакансии в подборе',
-                fontSize: 16
+                fontSize: 20
             },
             legend: {
                 labels: {
@@ -136,9 +160,8 @@ export tag Report
                 xAxes: [{
                     stacked: true,
                     ticks: {
-                        beginAtZero: true,
-                        fontSize: 10
-                    },
+                        beginAtZero: true
+                    },                    
                     scaleLabel: {
                         display: true,
                         labelString: 'Количество',
@@ -147,8 +170,7 @@ export tag Report
                 }],
                 yAxes: [{
                     ticks: {
-                        beginAtZero: true,
-                        fontSize: 10
+                        beginAtZero: true
                     },                    
                     stacked: true,
                     scaleLabel: {
@@ -207,7 +229,7 @@ export tag Report
             title: {
                 display: true,
                 text: 'Статистика за период',
-                fontSize: 16
+                fontSize: 20
             },
             legend: {
                 labels: {
@@ -220,8 +242,7 @@ export tag Report
             scales: {
                 xAxes: [{
                     ticks: {
-                        beginAtZero: true,
-                        fontSize: 10
+                        beginAtZero: true
                     },
                     scaleLabel: {
                         display: true,
@@ -230,6 +251,9 @@ export tag Report
                     }
                 }],
                 yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    },
                     scaleLabel: {
                         display: true,
                         labelString: 'Количество',
@@ -247,7 +271,6 @@ export tag Report
         }
 
         myChart_rep2=Chart.new ctx, conf
-        console.log myChart_rep2
 
 
     def addDataChart1 chart, data
@@ -261,6 +284,11 @@ export tag Report
                 for item in data:total_vacancies
                     dataset:data:push(item)
         )
+        chart:options:legend:labels:fontSize = chart:config:data:labels:length > 20 ? 10 : 12
+        chart:options:scales:yAxes[0]:scaleLabel:fontSize = chart:config:data:labels:length > 20 ? 10 : 12
+        chart:options:scales:yAxes[0]:ticks:fontSize = chart:config:data:labels:length > 20 ? 10 : 12
+        chart:options:scales:xAxes[0]:scaleLabel:fontSize = chart:config:data:labels:length > 20 ? 10 : 12
+        chart:options:scales:xAxes[0]:ticks:fontSize = chart:config:data:labels:length > 20 ? 10 : 12        
         chart:update()
 
     def removeDataChart1 chart
@@ -284,8 +312,11 @@ export tag Report
                 for item in data:finalists
                     dataset:data:push(item)
         )
-        # chart:options:scales:yAxes[0]:scaleLabel:fontSize = chart:config:data:labels:length > 20 ? 10 : 12
-        # chart:options:scales:xAxes[0]:scaleLabel:fontSize = chart:config:data:labels:length > 20 ? 10 : 12
+        chart:options:legend:labels:fontSize = chart:config:data:labels:length > 20 ? 10 : 12
+        chart:options:scales:yAxes[0]:scaleLabel:fontSize = chart:config:data:labels:length > 20 ? 10 : 12
+        chart:options:scales:yAxes[0]:ticks:fontSize = chart:config:data:labels:length > 20 ? 10 : 12
+        chart:options:scales:xAxes[0]:scaleLabel:fontSize = chart:config:data:labels:length > 20 ? 10 : 12
+        chart:options:scales:xAxes[0]:ticks:fontSize = chart:config:data:labels:length > 20 ? 10 : 12
         chart:update()
 
     def removeDataChart2 chart
@@ -321,15 +352,18 @@ export tag Report
         get_chart2
         ger_report_options
         get_report1
-        get_report2
+        # get_report2
 
     def render
         <self>
             <div.report_options>
                 <fieldset>
                     <legend>
-                        <b> "Фильтр"
-                    <div.report_options-div>    
+                        <b> "Фильтр "+department_name
+                    <div.report_options-div> 
+                        <select.select-css :change.change_opt_chart>
+                            <option  selected=(selected_opt_chart==1) value=1> "Отчёт Вакансии в подборе"
+                            <option  selected=(selected_opt_chart==2) value=2> "Отчёт Статистика за период"                    
                         <select.select-css :change.change_opt_sub1>
                             <option  selected=(selected_opt_sub1=="all") value="all"> "Все управления"
                             for item in arr_report_options:subdivisions_2
@@ -338,15 +372,17 @@ export tag Report
                             <option  selected=(selected_opt_sub2=="all") value="all"> "Все отделы"
                             for item in arr_options_sub2
                                 <option selected=(selected_opt_sub2==item:subdivisions_3_id) value=item:subdivisions_3_id> item:subdivisions_3_fullname                            
-                        <select.select-css :change.change_opt_period>
+                        <select.select-css :change.change_opt_period css:display="{display_opt_period}">
                             <option selected=(selected_opt_period=="all") value="all"> "За весь период"
                             for item in arr_report_options:period
                                 <option selected=(selected_opt_period==item:month_id) value=item:month_id> item:month_name                                      
             <div.content_chart>
-                <div.content_chart1>
+                <div.content_chart1 css:display="{display_chart1}">
                     # <div.content_button>
                     #    <button.button-css disabled=(tableData1:length==0) :click=(do button_selection 'left')>
-                    <canvas id="myChart2">
+                    <canvas id="myChart1" css:display="{display_nodata_chart1}">
+                    if display_nodata_chart1 == 'none' 
+                        <h1.nodata_content> "Данных нет"  
                     ###
                     <div.content_table css:display="{display_table1}">
                         <table.table>
@@ -369,10 +405,12 @@ export tag Report
                                             <td.total css:text-align="right" css:width="10vw"> item:active_vacancies
                                             <td.total css:text-align="right" css:width="10vw"> item:total_vacancies 
                     ###                    
-                <div.content_chart2> 
+                <div.content_chart2 css:display="{display_chart2}"> 
                     # <div.content_button>
                     #    <button.button-css disabled=(tableData2:length==0) :click=(do button_selection 'right')>                               
-                    <canvas id="myChart1">
+                    <canvas id="myChart2"  css:display="{display_nodata_chart2}">
+                    if display_nodata_chart2 == 'none' 
+                        <h1.nodata_content> "Данных нет" 
                     ###
                     <div.content_table css:display="{display_table2}">
                         <table.table>
@@ -396,5 +434,7 @@ export tag Report
                                             <td.total css:text-align="right" css:width="11vw"> item:resume
                                             <td.total css:text-align="right" css:width="11vw"> item:interview
                                             <td.total css:text-align="right" css:width="11vw"> item:finalists
-                    ###                                                       
+                    ###
+                # <div.nodata css:display="{display_nodata}">
+                #    <h1.nodata_content> "Данных нет"                                                      
 
