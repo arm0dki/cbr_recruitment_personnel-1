@@ -27,7 +27,7 @@ export tag Report
     let is_show_chart = false
     let display_table1 = 'none'
     let display_chart1 = 'flex'
-    let display_chart2 = 'none'
+    let display_chart2 = 'flex'
     let display_table2 = 'none'
     let display_nodata_chart1 = 'flex'
     let display_nodata_chart2 = 'flex' 
@@ -46,14 +46,23 @@ export tag Report
 
     def change_opt_chart e
         selected_opt_chart= e:_event:target:value
-        display_chart1 = (display_chart1 == 'none') ? 'flex' : 'none'
-        display_chart2 = (display_chart2 == 'none') ? 'flex' : 'none'
+        if selected_opt_chart == 0
+            get_report1
+            get_report2
+            display_chart1 = 'flex'
+            display_chart2 = 'flex'
+            display_opt_period='block'
+            selected_opt_period="all"
         if selected_opt_chart == 1
             display_opt_period='none'
-            get_report1
+            display_chart1 = 'flex'
+            display_chart2 = 'none'            
+            get_report1          
         if selected_opt_chart == 2
             selected_opt_period="all"
             display_opt_period='block'
+            display_chart2 = 'flex'
+            display_chart1 = 'none'             
             get_report2
 
     def change_opt_sub1 e
@@ -352,7 +361,7 @@ export tag Report
         get_chart2
         ger_report_options
         get_report1
-        # get_report2
+        get_report2
 
     def render
         <self>
@@ -362,6 +371,7 @@ export tag Report
                         <b> "Фильтр "+department_name
                     <div.report_options-div> 
                         <select.select-css :change.change_opt_chart>
+                            <option  selected=(selected_opt_chart==0) value=0> "Все отчёты"
                             <option  selected=(selected_opt_chart==1) value=1> "Отчёт Вакансии в подборе"
                             <option  selected=(selected_opt_chart==2) value=2> "Отчёт Статистика за период"                    
                         <select.select-css :change.change_opt_sub1>
