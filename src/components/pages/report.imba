@@ -388,6 +388,7 @@ export tag Report
                                 <option selected=(selected_opt_period==item:month_id) value=item:month_id> item:month_name                                      
             <div.content_chart>
                 <div.content_chart1 css:display="{display_chart1}">
+                    #
                     # <div.content_button>
                     #    <button.button-css disabled=(tableData1:length==0) :click=(do button_selection 'left')>
                     <canvas id="myChart1" css:display="{display_nodata_chart1}">
